@@ -18,16 +18,7 @@ export default class SetupForm {
       player1Input.value = "Player 1";
       player1Label.appendChild(player1Input);
       form.appendChild(player1Label);
-  
-      const vsComputerLabel = document.createElement("label");
-      vsComputerLabel.textContent = "Play against the computer? ";
-      const vsComputerCheckbox = document.createElement("input");
-      vsComputerCheckbox.type = "checkbox";
-      vsComputerCheckbox.name = "vsComputer";
-      vsComputerCheckbox.checked = true;
-      vsComputerLabel.appendChild(vsComputerCheckbox);
-      form.appendChild(vsComputerLabel);
-  
+
       const player2Label = document.createElement("label");
       player2Label.textContent = "Enter Player 2 name (O): ";
       const player2Input = document.createElement("input");
@@ -36,6 +27,15 @@ export default class SetupForm {
       player2Input.value = "Player 2";
       player2Label.appendChild(player2Input);
       form.appendChild(player2Label);
+      
+      const vsComputerLabel = document.createElement("label");
+      vsComputerLabel.textContent = "Play against the computer? ";
+      const vsComputerCheckbox = document.createElement("input");
+      vsComputerCheckbox.type = "checkbox";
+      vsComputerCheckbox.name = "vsComputer";
+      vsComputerCheckbox.checked = true;
+      vsComputerLabel.appendChild(vsComputerCheckbox);
+      form.appendChild(vsComputerLabel);
   
       player2Label.style.display = vsComputerCheckbox.checked ? "none" : "block";
       vsComputerCheckbox.addEventListener("change", () => {
