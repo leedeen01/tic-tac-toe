@@ -1,14 +1,41 @@
 export default class Player {
-  constructor(name, sign, isAI = false) {
+
+  static LOWDIFFICULTY = 0.4;
+  static MIDDIFFICULTY = 0.2;
+  static HIGHDIFFICULTY = 0.1;
+  static IMPOSSIBLEDIFFICULTY = 0.0;
+
+  constructor(name, sign, isAI = false, difficulty = "Low") {
     this.name = name;
     this.sign = sign;
     this.isAI = isAI;
+    this.difficulty = difficulty;
   }
 
   getBestMove(board, opponentSign) {
+    const moves = this.getActions(board);
+    let randomChance;
+    const difficultyLevel = this.difficulty.toLowerCase();
+  
+    if (difficultyLevel === "low") {
+      randomChance = Player.LOWDIFFICULTY;
+    } else if (difficultyLevel === "medium") {
+      randomChance = Player.MIDDIFFICULTY;
+    } else if (difficultyLevel === "hard") {
+      randomChance = Player.HIGHDIFFICULTY;
+    } else if (difficultyLevel === "impossible") {
+      randomChance = Player.IMPOSSIBLEDIFFICULTY;
+    } else {
+      randomChance = Player.IMPOSSIBLEDIFFICULTY;
+    }
+  
+    if (Math.random() < randomChance) {
+      const randomIndex = Math.floor(Math.random() * moves.length);
+      return moves[randomIndex];
+    }
+  
     let bestVal = -Infinity;
     let bestMove = -1;
-    const moves = this.getActions(board);
     for (let move of moves) {
       board[move] = this.sign;
       const moveVal = this.minValue(board, 0, -Infinity, Infinity, opponentSign);
@@ -20,6 +47,7 @@ export default class Player {
     }
     return bestMove;
   }
+  
 
   getActions(board) {
     const moves = [];

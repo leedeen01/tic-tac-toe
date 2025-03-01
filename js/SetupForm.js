@@ -18,7 +18,7 @@ export default class SetupForm {
       player1Input.value = "Player 1";
       player1Label.appendChild(player1Input);
       form.appendChild(player1Label);
-
+  
       const player2Label = document.createElement("label");
       player2Label.textContent = "Enter Player 2 name (O): ";
       const player2Input = document.createElement("input");
@@ -27,7 +27,7 @@ export default class SetupForm {
       player2Input.value = "Player 2";
       player2Label.appendChild(player2Input);
       form.appendChild(player2Label);
-      
+  
       const vsComputerLabel = document.createElement("label");
       vsComputerLabel.textContent = "Play against the computer? ";
       const vsComputerCheckbox = document.createElement("input");
@@ -38,8 +38,25 @@ export default class SetupForm {
       form.appendChild(vsComputerLabel);
   
       player2Label.style.display = vsComputerCheckbox.checked ? "none" : "block";
+  
+      const difficultyLabel = document.createElement("label");
+      difficultyLabel.textContent = "Select difficulty: ";
+      const difficultySelect = document.createElement("select");
+      difficultySelect.name = "difficulty";
+      ["Low", "Medium", "Hard", "Impossible"].forEach((level) => {
+        const option = document.createElement("option");
+        option.value = level.toLowerCase();
+        option.textContent = level;
+        difficultySelect.appendChild(option);
+      });
+      difficultyLabel.appendChild(difficultySelect);
+      form.appendChild(difficultyLabel);
+  
+      difficultyLabel.style.display = vsComputerCheckbox.checked ? "block" : "none";
+  
       vsComputerCheckbox.addEventListener("change", () => {
         player2Label.style.display = vsComputerCheckbox.checked ? "none" : "block";
+        difficultyLabel.style.display = vsComputerCheckbox.checked ? "block" : "none";
       });
   
       const submitButton = document.createElement("button");
@@ -56,9 +73,15 @@ export default class SetupForm {
         const name2 = vsComputer
           ? "Computer"
           : player2Input.value.trim() || "Player 2";
+        const difficulty = difficultySelect.value;
   
         if (this.onSubmit && typeof this.onSubmit === "function") {
-          this.onSubmit({ player1Name: name1, player2Name: name2, vsComputer });
+          this.onSubmit({
+            player1Name: name1,
+            player2Name: name2,
+            vsComputer,
+            difficulty, 
+          });
         }
       });
     }

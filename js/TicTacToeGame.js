@@ -11,15 +11,15 @@ export default class TicTacToeGame {
     this.gameOver = false;
 
     new SetupForm(this.containerElement, (setupData) => {
-      const { player1Name, player2Name, vsComputer } = setupData;
-      this.initializePlayers(player1Name, player2Name, vsComputer);
+      const { player1Name, player2Name, vsComputer, difficulty } = setupData;
+      this.initializePlayers(player1Name, player2Name, vsComputer, difficulty);
       this.renderBoard();
     });
   }
 
-  initializePlayers(player1Name, player2Name, vsComputer) {
+  initializePlayers(player1Name, player2Name, vsComputer, difficulty) {
     this.player1 = new Player(player1Name, "X");
-    this.player2 = new Player(player2Name, "O", vsComputer);
+    this.player2 = new Player(player2Name, "O", vsComputer, difficulty);
     this.currentPlayer = this.player1;
     this.againstAI = vsComputer;
   }
