@@ -86,6 +86,33 @@ body {
   background-color: #0056b3;
 }
 
+button {
+  background-color: #ff6347; /* Tomato red */
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+  display: block;
+  margin: 15px auto;
+  text-align: center;
+  min-width: 150px;
+}
+
+button:hover {
+  background-color: #d9534f; /* Darker red */
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+  background-color: #c23d3d;
+}
+
+
 /* Mobile-Specific Media Query */
 @media (max-width: 600px) {
   .setup-form, .board, #reset-game {

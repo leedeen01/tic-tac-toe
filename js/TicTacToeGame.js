@@ -57,9 +57,8 @@ export default class TicTacToeGame {
     this.board = Array(9).fill(null);
     this.gameOver = false;
     this.currentPlayer = this.player1;
-    const existingMessage = this.containerElement.querySelector(
-      ".end-game-message"
-    );
+    const existingMessage =
+      this.containerElement.querySelector(".end-game-message");
     if (existingMessage) {
       existingMessage.remove();
     }
@@ -69,6 +68,20 @@ export default class TicTacToeGame {
   renderBoard() {
     this.containerElement.innerHTML = "";
 
+    if (this.againstAI) {
+      const header = document.createElement("header");
+      header.textContent = "Difficulty: " + this.player2.difficulty.toUpperCase();
+      this.containerElement.appendChild(header);
+    } else {
+      const header = document.createElement("header");
+      header.textContent = this.player1.name + " (X) vs " + this.player2.name + " (O)";
+      this.containerElement.appendChild(header);
+    }
+    const backButton = document.createElement("button");
+    backButton.textContent = "Back to Setup";
+    backButton.id = "back-button";
+    backButton.addEventListener("click", this.handleBackClick.bind(this));
+    this.containerElement.appendChild(backButton);
     const boardElement = document.createElement("div");
     boardElement.classList.add("board");
 
@@ -90,6 +103,17 @@ export default class TicTacToeGame {
       : `${this.currentPlayer.name}'s turn (${this.currentPlayer.sign})`;
     this.containerElement.appendChild(gameStatus);
   }
+
+  handleBackClick() {
+    this.resetGame(); // Fix: Use `this.resetGame()` instead of `resetGame()`
+    new SetupForm(this.containerElement, (setupData) => {
+      const { player1Name, player2Name, vsComputer, difficulty } = setupData;
+      this.initializePlayers(player1Name, player2Name, vsComputer, difficulty);
+      this.renderBoard();
+    });
+  }
+  
+  
 
   displayEndGameMessage(message) {
     const messageContainer = document.createElement("div");
@@ -136,7 +160,10 @@ export default class TicTacToeGame {
   makeAiMove() {
     if (this.gameOver) return;
 
-    const bestMoveIndex = this.player2.getBestMove(this.board, this.player1.sign);
+    const bestMoveIndex = this.player2.getBestMove(
+      this.board,
+      this.player1.sign
+    );
     if (bestMoveIndex !== -1) {
       this.board[bestMoveIndex] = this.player2.sign;
     }
